@@ -9,7 +9,6 @@ services:
       - git-name
       - github-token
       - github-username
-      - ovpn-config
 
 secrets:
   docker-access-token:
@@ -24,5 +23,3 @@ secrets:
     file: ../.secrets/github/token.txt
   github-username:
     file: ../.secrets/github/username.txt
-  ovpn-config:
-    file: ../.secrets/ovpn/config.ovpn

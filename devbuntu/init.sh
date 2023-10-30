@@ -1,5 +1,3 @@
-openvpn --config /run/secrets/ovpn-config --daemon
-
 cat /run/secrets/docker-access-token | docker login --username=$(cat /run/secrets/docker-username) --password-stdin
 
 cat >~/.netrc <<EOL
