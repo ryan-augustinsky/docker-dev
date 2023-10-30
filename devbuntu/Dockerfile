@@ -1,6 +1,5 @@
 FROM auguryan/mybuntu:latest
 RUN apt update
-RUN apt install openvpn -y
 
 RUN mkdir /devbuntu
 COPY init.sh /devbuntu/.init.sh
