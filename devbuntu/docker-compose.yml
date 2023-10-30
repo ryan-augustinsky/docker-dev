@@ -9,6 +9,9 @@ services:
       - git-name
       - github-token
       - github-username
+      - hetzner-token
+    volumes:
+      - code:/code
 
 secrets:
   docker-access-token:
@@ -23,3 +26,11 @@ secrets:
     file: ../.secrets/github/token.txt
   github-username:
     file: ../.secrets/github/username.txt
+  hetzner-token:
+    file: ../.secrets/hetzner/token.txt
+
+volumes:
+  code:
+    driver: hetzner
+    driver_opts:
+      size: 10
