@@ -1,0 +1,28 @@
+services:
+  devbuntu:
+    image: auguryan/devbuntu:latest
+    privileged: true
+    secrets:
+      - docker-access-token
+      - docker-username
+      - git-email
+      - git-name
+      - github-token
+      - github-username
+      - ovpn-config
+
+secrets:
+  docker-access-token:
+    file: ../.secrets/docker/access-token.txt
+  docker-username:
+    file: ../.secrets/docker/username.txt
+  git-email:
+    file: ../.secrets/git/email.txt
+  git-name:
+    file: ../.secrets/git/name.txt
+  github-token:
+    file: ../.secrets/github/token.txt
+  github-username:
+    file: ../.secrets/github/username.txt
+  ovpn-config:
+    file: ../.secrets/ovpn/config.ovpn
