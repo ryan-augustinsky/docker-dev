@@ -1,4 +1,7 @@
 cat /run/secrets/docker-access-token | docker login --username=$(cat /run/secrets/docker-username) --password-stdin
+docker plugin install --grant-all-permissions --alias hetzner costela/docker-volume-hetzner
+docker plugin set hetzner apikey=$(cat /run/secrets/hetzner-token)
+docker plugin enable hetzner
 
 cat >~/.netrc <<EOL
 machine github.com
@@ -12,3 +15,5 @@ EOL
 
 git config --global user.email "$(cat /run/secrets/git-email)"
 git config --global user.name "$(cat /run/secrets/git-name)"
+
+cd /code
