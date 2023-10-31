@@ -2,9 +2,12 @@
 for f in /devbuntu/bin/*.sh; do ln -s $f /devbuntu/bin/$(basename $f .sh); done
 
 secret docker_access_token | docker login --username=$(secret docker_username) --password-stdin
-docker plugin install --grant-all-permissions --alias hetzner costela/docker-volume-hetzner
-docker plugin set hetzner apikey=$(secret hetzner_token)
-docker plugin enable hetzner
+
+if ! [ "$(docker plugin inspect hetzner -f '{{.Enabled}}')" ];
+  docker plugin install --grant-all-permissions --alias hetzner costela/docker-volume-hetzner
+  docker plugin set hetzner apikey=$(secret hetzner_token)
+  docker plugin enable hetzner
+fi
 
 cat >~/.netrc <<EOL
 machine github.com
@@ -19,6 +22,6 @@ EOL
 git config --global user.email "$(secret git_email)"
 git config --global user.name "$(secret git_name)"
 
-ln -s /code/docker-dev/build.sh /devbuntu/bin/build
+ln -s -f /code/docker-dev/build.sh /devbuntu/bin/build
 
 cd /code
