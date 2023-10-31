@@ -4,5 +4,5 @@ docker stop $(docker ps -a -q --filter ancestor=moby/buildkit:buildx-stable-1 --
 docker system prune --force
 docker volume prune -a -f
 docker buildx create --use
-docker buildx build . --platform linux/amd64,linux/arm64 --push -t $1:latest
+docker buildx build $2/. --platform linux/amd64,linux/arm64 --push -t $1:latest
 docker pull $1:latest

@@ -1,1 +1,3 @@
-../build-base.sh auguryan/ubuntu
+IMAGE=auguryan/ubuntu
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+$SCRIPT_DIR/../build-base.sh $IMAGE $SCRIPT_DIR
