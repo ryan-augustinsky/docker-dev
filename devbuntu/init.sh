@@ -5,4 +5,5 @@ init-github
 init-docker
 init-git
 
-cd /code
+# if the current directory is ~ then switch to /code
+if [ "$PWD" = "$HOME" ]; then cd /code; fi
