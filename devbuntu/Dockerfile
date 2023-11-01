@@ -1,5 +1,8 @@
 FROM auguryan/mybuntu:latest
 
+RUN apt update && apt install -y \
+    gh
+
 # Replace shell with bash so we can source files
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
