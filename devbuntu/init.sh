@@ -1,14 +1,7 @@
 # symlink all .sh files in /devbuntu/bin to no extension in /devbuntu/bin
 for f in /devbuntu/bin/*.sh; do ln -s $f /devbuntu/bin/$(basename $f .sh); done
 
-secret github_token | gh auth login --with-token
-mkdir -p /code/github
-# clone every repo from github to /code/github if it doesn't exist, using gh repo list
-for repo in $(gh repo list --json nameWithOwner --limit 1000 | jq -r '.[].nameWithOwner'); do
-  if ! [ -d /code/github/$repo ]; then
-    gh repo clone $repo /code/github/$repo
-  fi
-done
+init-github
 
 secret docker_access_token | docker login --username=$(secret docker_username) --password-stdin
 
