@@ -24,6 +24,4 @@ EOL
 git config --global user.email "$(secret git_email)"
 git config --global user.name "$(secret git_name)"
 
-ln -s -f /code/docker-dev/build.sh /devbuntu/bin/build
-
 cd /code
