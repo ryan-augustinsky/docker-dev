@@ -1,1 +1,0 @@
-../run-base.sh prodbuntu
