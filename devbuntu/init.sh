@@ -4,6 +4,7 @@ for f in /devbuntu/bin/*.sh; do ln -s $f /devbuntu/bin/$(basename $f .sh); done
 init-github
 init-docker
 init-git
+init-containers
 
 # if the current directory is ~ then switch to /code
 if [ "$PWD" = "$HOME" ]; then cd /code; fi
