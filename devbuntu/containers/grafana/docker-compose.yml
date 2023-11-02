@@ -10,7 +10,7 @@ services:
      - GF_INSTALL_PLUGINS=grafana-clock-panel
     user: '0'
     ports:
-     - '3007:3000'
+     - '127.0.0.1:3007:3000'
     volumes:
      - 'grafana_storage:/var/lib/grafana'
 

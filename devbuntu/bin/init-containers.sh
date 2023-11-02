@@ -9,7 +9,6 @@ for container in /devbuntu/containers/*; do
       $container/gen-env.sh > $container/.env
     fi
 
-    docker-compose -f $container/docker-compose.yml down
-    docker-compose -f $container/docker-compose.yml up -d
+    docker-compose -f $container/docker-compose.yml up -d --no-recreate
   fi
 done
