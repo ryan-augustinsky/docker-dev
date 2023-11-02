@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  prometheus:
+    build: .
+    ports:
+      - 9090:9090
+    volumes:
+      - prometheus_storage:/prometheus
+
+  prometheus-tunnel:
+    image: cloudflare/cloudflared
+    command: tunnel run --url http://prometheus:9090
+    depends_on:
+      - prometheus
+    env_file:
+      - .env
+
+volumes:
+  prometheus_storage:
+    driver: hetzner:latest
+    driver_opts:
+      size: 10

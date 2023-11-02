@@ -1,0 +1,10 @@
+scrape_configs:
+  # Target Prometheus to monitor itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Now target grafana which is defined in ../containers/docker-compose.yml
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['localhost:5000']
