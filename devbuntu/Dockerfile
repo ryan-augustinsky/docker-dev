@@ -24,6 +24,7 @@ ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # Install ruby with rvm
 ENV RVM_DIR /usr/local/rvm
+ENV RVM_SCRIPT /etc/profile.d/rvm.sh
 ENV RUBY_VERSION 3.2.2
 
 # get the gpg keys listed at https://rvm.io/rvm/security
@@ -33,13 +34,14 @@ RUN gpg --keyserver keyserver.ubuntu.com \
 
 RUN mkdir -p $RVM_DIR \
     && curl -sSL https://get.rvm.io | bash -s stable \
-    && source $RVM_DIR/scripts/rvm \
+    && source $RVM_SCRIPT \
+    && echo 'source $RVM_SCRIPT' >> ~/.bashrc \
     && rvm install $RUBY_VERSION \
     && rvm use $RUBY_VERSION --default
 
 # Install Rails
 ENV RAILS_VERSION 7.1.1
-RUN source $RVM_DIR/scripts/rvm \
+RUN source $RVM_SCRIPT \
     && gem install rails -v $RAILS_VERSION
 
 RUN npm install -g serve
