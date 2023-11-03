@@ -33,12 +33,11 @@ ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 RUN npm install -g serve
 
-COPY init.sh /devbuntu/.init.sh
-RUN chmod +x /devbuntu/.init.sh
 RUN echo "if [ "\$PWD" = "\$HOME" ]; then cd /code; fi" >> ~/.bashrc
 
 COPY bin/ /devbuntu/bin/
 RUN for f in /devbuntu/bin/*.sh; do ln -s $f /devbuntu/bin/$(basename $f .sh); done
+RUN chmod +x /devbuntu/bin/*.sh
 RUN echo "export PATH=$PATH:/devbuntu/bin" >> ~/.bashrc
 
 COPY containers/ /devbuntu/containers/
