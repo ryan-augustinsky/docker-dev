@@ -47,4 +47,4 @@ COPY --from=docker/buildx-bin /buildx /usr/libexec/docker/cli-plugins/docker-bui
 EXPOSE 3006
 
 # run the init script
-CMD ["init"]
+ENTRYPOINT ["init"]
