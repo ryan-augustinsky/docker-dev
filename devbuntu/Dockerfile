@@ -35,9 +35,10 @@ RUN npm install -g serve
 
 COPY init.sh /devbuntu/.init.sh
 RUN chmod +x /devbuntu/.init.sh
-RUN echo "source /devbuntu/.init.sh" >> ~/.bashrc
+RUN echo "if [ "\$PWD" = "\$HOME" ]; then cd /code; fi" >> ~/.bashrc
 
 COPY bin/ /devbuntu/bin/
+RUN for f in /devbuntu/bin/*.sh; do ln -s $f /devbuntu/bin/$(basename $f .sh); done
 RUN echo "export PATH=$PATH:/devbuntu/bin" >> ~/.bashrc
 
 COPY containers/ /devbuntu/containers/
@@ -45,3 +46,6 @@ COPY containers/ /devbuntu/containers/
 COPY --from=docker/buildx-bin /buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
 EXPOSE 3006
+
+# run the init script
+CMD ["/devbuntu/bin/.init.sh"]
