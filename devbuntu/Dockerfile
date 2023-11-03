@@ -23,7 +23,7 @@ ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # Install ruby with rvm
-ENV RVM_DIR /devbuntu/.rvm
+ENV RVM_DIR /usr/local/rvm
 ENV RUBY_VERSION 3.2.2
 
 # get the gpg keys listed at https://rvm.io/rvm/security
