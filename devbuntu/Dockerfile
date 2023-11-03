@@ -44,7 +44,5 @@ COPY containers/ /devbuntu/containers/
 
 COPY --from=docker/buildx-bin /buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
-EXPOSE 3006
-
 # run the init script
-ENTRYPOINT ["init"]
+CMD ["bash", "-c", "init && /bin/bash"]
