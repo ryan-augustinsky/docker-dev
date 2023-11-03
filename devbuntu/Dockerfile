@@ -12,8 +12,7 @@ RUN apt update && apt install -y \
     libjemalloc-dev \
     libjemalloc2
 
-# Replace shell with bash so we can source files
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+COPY --from=docker/buildx-bin /buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
 RUN mkdir /devbuntu
 
@@ -33,16 +32,14 @@ ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 RUN npm install -g serve
 
-RUN echo "if [ "\$PWD" = "\$HOME" ]; then cd /code; fi" >> ~/.bashrc
-
 COPY bin/ /devbuntu/bin/
-RUN for f in /devbuntu/bin/*.sh; do ln -s $f /devbuntu/bin/$(basename $f .sh); done
 RUN chmod +x /devbuntu/bin/*.sh
+RUN for f in /devbuntu/bin/*.sh; do ln -s $f /devbuntu/bin/$(basename $f .sh); done
 ENV PATH="/devbuntu/bin:${PATH}"
 
 COPY containers/ /devbuntu/containers/
 
-COPY --from=docker/buildx-bin /buildx /usr/libexec/docker/cli-plugins/docker-buildx
+RUN echo "if [ "\$PWD" = "\$HOME" ]; then cd /code; fi" >> ~/.bashrc
 
 # run the init script
-CMD ["bash", "-c", "init && /bin/bash"]
+CMD ["bash", "-c", "mybuntu && devbuntu && /bin/bash"]
