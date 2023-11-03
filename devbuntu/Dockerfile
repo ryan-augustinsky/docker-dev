@@ -1,5 +1,10 @@
 FROM auguryan/mybuntu:latest
 
+# Install ruby with jemalloc
+FROM ghcr.io/moritzheiber/ruby-jemalloc:3.2.2-slim as ruby
+COPY --link --from=ruby /opt/ruby /opt/ruby
+ENV PATH="/opt/ruby/bin:${PATH}"
+
 RUN apt update && apt install -y \
     gh
 
@@ -26,18 +31,6 @@ ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 ENV RVM_DIR /usr/local/rvm
 ENV RVM_SCRIPT /etc/profile.d/rvm.sh
 ENV RUBY_VERSION 3.2.2
-
-# get the gpg keys listed at https://rvm.io/rvm/security
-RUN gpg --keyserver keyserver.ubuntu.com \
-        --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
-        7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-
-RUN mkdir -p $RVM_DIR \
-    && curl -sSL https://get.rvm.io | bash -s stable \
-    && source $RVM_SCRIPT \
-    && echo 'source $RVM_SCRIPT' >> ~/.bashrc \
-    && rvm install $RUBY_VERSION \
-    && rvm use $RUBY_VERSION --default
 
 # Install Rails
 ENV RAILS_VERSION 7.1.1
