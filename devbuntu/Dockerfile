@@ -38,7 +38,7 @@ RUN echo "if [ "\$PWD" = "\$HOME" ]; then cd /code; fi" >> ~/.bashrc
 COPY bin/ /devbuntu/bin/
 RUN for f in /devbuntu/bin/*.sh; do ln -s $f /devbuntu/bin/$(basename $f .sh); done
 RUN chmod +x /devbuntu/bin/*.sh
-RUN echo "export PATH=$PATH:/devbuntu/bin" >> ~/.bashrc
+ENV PATH="/devbuntu/bin:${PATH}"
 
 COPY containers/ /devbuntu/containers/
 
@@ -47,4 +47,4 @@ COPY --from=docker/buildx-bin /buildx /usr/libexec/docker/cli-plugins/docker-bui
 EXPOSE 3006
 
 # run the init script
-CMD ["/devbuntu/bin/init.sh"]
+CMD ["init"]
