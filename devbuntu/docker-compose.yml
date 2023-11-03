@@ -6,8 +6,7 @@ services:
     stdin_open: true
     privileged: true
     volumes:
-      - devbuntu/code:/code
-      - devbuntu/.vscode-server:/root/.vscode-server
+      - code:/code
       - /var/run/docker.sock:/var/run/docker.sock
     env_file:
       - .env
@@ -19,7 +18,7 @@ services:
     command: --interval 30
 
 volumes:
-  devbuntu:
+  code:
     driver: hetzner
     driver_opts:
       size: 10
