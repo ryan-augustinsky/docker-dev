@@ -1,6 +1,6 @@
 FROM auguryan/ubuntu:latest
 
-RUN apt update && apt install -y docker docker-compose vim curl jq
+RUN apt update && apt install -y docker docker-compose vim curl jq dirmngr
 
 # Hashicorp Vault
 RUN apt update && apt install -y --no-install-recommends gpg curl lsb-release ca-certificates openssl
