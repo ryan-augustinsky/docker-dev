@@ -1,8 +1,10 @@
-FROM auguryan/mybuntu:latest
+FROM auguryan/mybuntu:latest as base
 
 # Install ruby with jemalloc
 FROM ghcr.io/moritzheiber/ruby-jemalloc:3.2.2-slim as ruby
 COPY --link --from=ruby /opt/ruby /opt/ruby
+
+FROM base
 ENV PATH="/opt/ruby/bin:${PATH}"
 
 RUN apt update && apt install -y \
