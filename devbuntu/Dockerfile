@@ -8,7 +8,9 @@ COPY --link --from=ruby /opt/ruby /opt/ruby
 ENV PATH="/opt/ruby/bin:${PATH}"
 
 RUN apt update && apt install -y \
-    gh
+    gh \
+    libjemalloc-dev \
+    libjemalloc2
 
 # Replace shell with bash so we can source files
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
