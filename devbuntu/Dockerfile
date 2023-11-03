@@ -22,6 +22,20 @@ RUN mkdir -p $NVM_DIR \
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
+# Install ruby with rvm
+ENV RVM_DIR /devbuntu/.rvm
+ENV RUBY_VERSION 3.2.2
+RUN mkdir -p $RVM_DIR \
+    && curl -sSL https://get.rvm.io | bash -s stable \
+    && source $RVM_DIR/scripts/rvm \
+    && rvm install $RUBY_VERSION \
+    && rvm use $RUBY_VERSION --default
+
+# Install Rails
+ENV RAILS_VERSION 7.1.1
+RUN source $RVM_DIR/scripts/rvm \
+    && gem install rails -v $RAILS_VERSION
+
 RUN npm install -g serve
 
 COPY init.sh /devbuntu/.init.sh
