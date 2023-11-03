@@ -1,19 +1,16 @@
 services:
   devbuntu:
     image: auguryan/devbuntu:latest
+    container_name: devbuntu
     tty: true
+    stdin_open: true
     privileged: true
-    secrets:
-      - docker-access-token
-      - docker-username
-      - git-email
-      - git-name
-      - github-token
-      - github-username
-      - hetzner-token
     volumes:
-      - code:/code
+      - devbuntu/code:/code
+      - devbuntu/.vscode-server:/root/.vscode-server
       - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - .env
 
   watchtower:
     image: containrrr/watchtower
@@ -21,24 +18,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30
 
-secrets:
-  docker-access-token:
-    file: ../.secrets/docker/access-token.txt
-  docker-username:
-    file: ../.secrets/docker/username.txt
-  git-email:
-    file: ../.secrets/git/email.txt
-  git-name:
-    file: ../.secrets/git/name.txt
-  github-token:
-    file: ../.secrets/github/token.txt
-  github-username:
-    file: ../.secrets/github/username.txt
-  hetzner-token:
-    file: ../.secrets/hetzner/token.txt
-
 volumes:
-  code:
+  devbuntu:
     driver: hetzner
     driver_opts:
       size: 10
