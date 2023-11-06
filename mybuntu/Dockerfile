@@ -4,11 +4,13 @@ FROM auguryan/ubuntu:latest
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 RUN mkdir /mybuntu
+RUN mkdir /mybuntu/logs
+ENV LOG_DIR /mybuntu/logs
 
 # Replace shell with bash so we can source files
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
-RUN apt update && apt install -y docker docker-compose vim curl jq dirmngr
+RUN apt update && apt install -y docker docker-compose vim curl jq dirmngr lsof
 
 # Hashicorp Vault
 RUN apt update && apt install -y --no-install-recommends gpg curl lsb-release ca-certificates openssl
