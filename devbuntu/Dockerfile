@@ -9,12 +9,32 @@ ENV PATH="/opt/ruby/bin:${PATH}"
 
 RUN apt update && apt install -y \
     gh \
+    # needed to build ruby
     libjemalloc-dev \
-    libjemalloc2
+    libjemalloc2 \
+    # needed to build many ruby gems
+    build-essential \
+    # needed to build ruby pg (postgres) gem
+    libpq-dev \
+    # needed to build ruby psych gem
+    libyaml-dev \
+    # needed to build ruby idn-ruby gem
+    libidn-dev \
+    # needed to build ruby nokogiri gem
+    libssl-dev \
+    # needed to build ruby charlock_holmes gem
+    libicu-dev \
+    # needed to build ruby charlock_holmes gem
+    zlib1g-dev
 
 COPY --from=docker/buildx-bin /buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
 RUN mkdir /devbuntu
+RUN ln -s /mybuntu/logs /devbuntu/logs
+ENV LOG_DIR /devbuntu/logs
+
+ENV BUNDLE_PATH=/devbuntu/bundle
+RUN mkdir -p $BUNDLE_PATH
 
 # Install nvm, node, and npm
 # https://stackoverflow.com/questions/25899912/how-to-install-nvm-in-docker
@@ -31,6 +51,7 @@ ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 RUN npm install -g serve
+RUN npm install -g yarn
 
 COPY bin/ /devbuntu/bin/
 RUN chmod +x /devbuntu/bin/*.sh
