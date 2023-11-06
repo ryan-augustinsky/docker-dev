@@ -7,6 +7,7 @@ services:
     privileged: true
     volumes:
       - code:/code
+      - cache:/devbuntu/cache
       - /var/run/docker.sock:/var/run/docker.sock
     env_file:
       - .env
@@ -19,6 +20,10 @@ services:
 
 volumes:
   code:
+    driver: hetzner
+    driver_opts:
+      size: 10
+  cache:
     driver: hetzner
     driver_opts:
       size: 10

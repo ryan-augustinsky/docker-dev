@@ -60,6 +60,8 @@ ENV PATH="/devbuntu/bin:${PATH}"
 
 COPY containers/ /devbuntu/containers/
 
+RUN mkdir -p /devbuntu/cache
+
 RUN echo "if [ "\$PWD" = "\$HOME" ]; then cd /code; fi" >> ~/.bashrc
 
 # run the init script
