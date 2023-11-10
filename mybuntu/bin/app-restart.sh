@@ -1,0 +1,2 @@
+app stop $@
+app start $@

@@ -23,7 +23,10 @@ RUN chmod +x /mybuntu/bin/*.sh
 RUN for f in /mybuntu/bin/*.sh; do ln -s $f /mybuntu/bin/$(basename $f .sh); done
 ENV PATH="/mybuntu/bin:${PATH}"
 
-COPY containers/ /mybuntu/containers/
+COPY startup/ /mybuntu/startup/
+
+RUN mkdir -p /mybuntu/apps
+ENV APP_DIR /mybuntu/apps
 
 # run the init script
 CMD ["bash", "-c", "mybuntu && /bin/bash"]

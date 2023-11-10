@@ -1,15 +1,28 @@
-# iterate through every dir in /devbuntu/container or /mybuntu/contaner
-# in each dir, run the gen-env.sh script if it exists
-# then run docker-compose up -d
-for container in /$1/containers/*; do
-  if [ -d $container ]; then
+# ensure $1 is set, write --help
+if [ "$1" == "" ]; then
+  echo "Usage: $0 <app-dir>"
+  exit 1
+fi
 
-    # creates an .env file to use in docker-compose.yml
-    if [ -f $container/gen-env.sh ]; then
-      chmod +x $container/gen-env.sh
-      $container/gen-env.sh > $container/.env
-    fi
+APP_DIR=$1
 
-    docker-compose -f $container/docker-compose.yml up -d --no-recreate
+if [ ! -d $APP_DIR ]; then
+  echo "Directory $APP_DIR does not exist"
+  exit 1
+fi
+
+# stop & rm all docker-containers that have $APP_DIR at the start of their working directory (found with docker container inspect, inside Config/Labels/com.docker.compose.project.working_dir)
+docker container ls --format '{{.ID}} {{.Names}}' | while read -r CONTAINER_LINE; do
+  CONTAINER_ID=$(echo $CONTAINER_LINE | awk '{print $1}')
+  CONTAINER_NAME=$(echo $CONTAINER_LINE | awk '{print $2}')
+  CONTAINER_WORKING_DIR=$(docker container inspect $CONTAINER_ID --format '{{ index .Config.Labels "com.docker.compose.project.working_dir" }}')
+  if [[ $CONTAINER_WORKING_DIR == $APP_DIR* ]]; then
+    docker container stop $CONTAINER_NAME
+    docker container rm $CONTAINER_NAME
   fi
+done
+
+app list | while read -r APP_LINE; do
+  APP_NAME=$(echo $APP_LINE | awk '{print $1}')
+  app restart $APP_NAME
 done

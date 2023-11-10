@@ -1,2 +1,2 @@
-rm -r /code/github
+rm -r /mnt/code/github
 init-github

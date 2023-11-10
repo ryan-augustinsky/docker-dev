@@ -6,8 +6,7 @@ services:
     stdin_open: true
     privileged: true
     volumes:
-      - code:/code
-      - cache:/devbuntu/cache
+      - code:/mnt/code
       - /var/run/docker.sock:/var/run/docker.sock
     env_file:
       - .env

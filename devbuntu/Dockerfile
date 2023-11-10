@@ -25,7 +25,9 @@ RUN apt update && apt install -y \
     # needed to build ruby charlock_holmes gem
     libicu-dev \
     # needed to build ruby charlock_holmes gem
-    zlib1g-dev
+    zlib1g-dev \
+    python3 \
+    python3-pip
 
 COPY --from=docker/buildx-bin /buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
@@ -58,11 +60,12 @@ RUN chmod +x /devbuntu/bin/*.sh
 RUN for f in /devbuntu/bin/*.sh; do ln -s $f /devbuntu/bin/$(basename $f .sh); done
 ENV PATH="/devbuntu/bin:${PATH}"
 
-COPY containers/ /devbuntu/containers/
+COPY startup/ /devbuntu/startup/
 
-RUN mkdir -p /devbuntu/cache
+ENV APP_DIR /devbuntu/apps
+ENV BUILDS_DIR /devbuntu/builds
 
-RUN echo "if [ "\$PWD" = "\$HOME" ]; then cd /code; fi" >> ~/.bashrc
+RUN echo "if [ "\$PWD" = "\$HOME" ] || [ "\$PWD" = "/" ]; then cd /mnt; fi" >> /root/.bashrc
 
 # run the init script
 CMD ["bash", "-c", "mybuntu && devbuntu && /bin/bash"]

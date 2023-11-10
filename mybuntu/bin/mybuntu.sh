@@ -1,2 +1,2 @@
 init-docker
-init-containers mybuntu
+init-containers /mybuntu/startup
