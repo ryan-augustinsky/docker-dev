@@ -30,4 +30,5 @@ fi
 
 PROJECT_NAME=$(app info $APP_NAME project)
 export $(secret dump $PROJECT_NAME --environment $ENVIRONMENT | xargs)
+docker-compose -f $DOCKER_COMPOSE_PATH pull
 docker-compose -f $DOCKER_COMPOSE_PATH up -d
