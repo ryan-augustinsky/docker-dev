@@ -20,8 +20,6 @@ RUN apt update && apt install -y \
     libyaml-dev \
     # needed to build ruby idn-ruby gem
     libidn-dev \
-    # needed to build ruby nokogiri gem
-    libssl-dev \
     # needed to build ruby charlock_holmes gem
     libicu-dev \
     # needed to build ruby charlock_holmes gem

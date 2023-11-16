@@ -10,8 +10,10 @@ ENV LOG_DIR /mybuntu/logs
 # Replace shell with bash so we can source files
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
-RUN apt update && apt install -y docker docker-compose vim curl jq dirmngr lsof cargo
+RUN apt update && apt install -y libssl-dev pkg-config docker docker-compose vim curl jq dirmngr lsof cargo
 ENV PATH="/root/.cargo/bin:${PATH}"
+# update crates
+RUN cargo install cargo-update
 
 # Hashicorp Vault
 RUN apt update && apt install -y --no-install-recommends gpg curl lsb-release ca-certificates openssl
