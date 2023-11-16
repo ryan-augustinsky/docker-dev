@@ -33,7 +33,7 @@ RUN apt update && apt install -y \
 # https://web.archive.org/web/20231028230226/https://fabianlee.org/2023/08/21/ansible-resolving-could-not-initialize-the-preferred-locale-unsupported-locale-setting/
 ENV LC_ALL=C.UTF-8
 ENV PATH="/root/.local/bin:${PATH}"
-RUN python3 -m pip install --user ansible
+RUN python3 -m pip install --user ansible passlib
 
 COPY --from=docker/buildx-bin /buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
