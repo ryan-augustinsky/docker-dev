@@ -1,3 +1,6 @@
+ORIGIN_DIR=$(pwd)
+trap "cd $ORIGIN_DIR" EXIT
+
 echo $github_token | gh auth login --with-token
 
 mkdir -p /mnt/code/github
@@ -7,6 +10,7 @@ for repo in $(gh repo list --no-archived --json nameWithOwner --limit 1000 | jq 
     gh repo clone $repo /mnt/code/github/$repo
   else
     cd /mnt/code/github/$repo
+    echo "Syncing $repo"
     gh repo sync
   fi
 done
