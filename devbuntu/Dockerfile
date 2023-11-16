@@ -35,6 +35,9 @@ ENV LC_ALL=C.UTF-8
 ENV PATH="/root/.local/bin:${PATH}"
 RUN python3 -m pip install --user ansible passlib
 
+# Install just https://github.com/casey/just
+RUN cargo install just
+
 COPY --from=docker/buildx-bin /buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
 RUN mkdir /devbuntu
