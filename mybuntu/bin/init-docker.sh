@@ -1,3 +1,4 @@
+rm -f ~/.docker/config.json
 echo $docker_access_token | docker login --username=$docker_username --password-stdin
 
 if ! [ "$(docker plugin inspect hetzner -f '{{.Enabled}}')" ]; then
